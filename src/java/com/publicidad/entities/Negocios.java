@@ -20,6 +20,7 @@ public class Negocios {
     private String direccion;
     private String coordenadas;
     private String logotipo;
+    private byte[] image;
 
     public String getCoordenadas() {
         return coordenadas;
@@ -60,6 +61,15 @@ public class Negocios {
     public void setNombreNegocio(String nombreNegocio) {
         this.nombreNegocio = nombreNegocio;
     }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+    
 
     @Override
     public String toString() {
