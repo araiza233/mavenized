@@ -31,13 +31,15 @@
             <property name='driverClassName' value='org.postgresql.Driver' />
             <property name='username' value='postgres' />
             <property name='password' value='' />
-            <property name='url' value='jdbc:postgresql://192.168.1.222:5432/publicidad' />
-            <!--<property name='url' value='jdbc:postgresql://192.168.0.200:5432/publicidad' />-->
+            <property name='url' value='jdbc:postgresql://127.0.0.1:5432/publicidad' />
+            <!--<property name='url' value='jdbc:postgresql://192.168.0.200:5432/publicidad' />
+           -->
            <!--
             <property name='url' value='jdbc:postgresql://127.4.170.130:5432/puntodeventa' />
             <property name='username' value='admindydyhhq' />
             <property name='password' value='tWx1AzVlzhut' />
             -->
+            
     </bean>
  <!-- configure hibernate session factory -->
  <bean id='sessionFactory' class='org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean'>
@@ -49,6 +51,8 @@
         <value>com.publicidad.entities.Ventas</value>
         <value>com.publicidad.entities.DetalleVentas</value>
         <value>com.publicidad.entities.Negocios</value>
+        <value>com.publicidad.entities.Images</value>
+        <value>com.publicidad.entities.Articulo</value>
        </list>
       </property>
       <property name='hibernateProperties'>

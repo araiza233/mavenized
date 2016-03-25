@@ -21,7 +21,6 @@ public class Negocios {
     private String coordenadas;
     private String logotipo;
     private byte[] image;
-
     public String getCoordenadas() {
         return coordenadas;
     }
@@ -62,18 +61,17 @@ public class Negocios {
         this.nombreNegocio = nombreNegocio;
     }
 
+    @Override
+    public String toString() {
+        return "idNegocio: "+getIdNegocio()+", nombreNegocio: "+getNombreNegocio()+", direccion: "+getDireccion()+", coordenadas: "+getCoordenadas()+", logotipo"+getLogotipo();
+    }
+
     public byte[] getImage() {
         return image;
     }
 
     public void setImage(byte[] image) {
         this.image = image;
-    }
-    
-
-    @Override
-    public String toString() {
-        return "idNegocio: "+getIdNegocio()+", nombreNegocio: "+getNombreNegocio()+", direccion: "+getDireccion()+", coordenadas: "+getCoordenadas()+", logotipo"+getLogotipo();
     }
     
 }

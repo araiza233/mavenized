@@ -1,6 +1,9 @@
 package com.mx.webservices;
 import com.google.gson.Gson;
+import com.publicidad.entities.Articulo;
+import com.publicidad.entities.Images;
 import com.publicidad.entities.Negocios;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -77,7 +80,8 @@ public class NegociosWebServicesLogic {
         Gson gson = new Gson();
         Negocios neg = gson.fromJson(crunchifyBuilder, Negocios.class);
         System.out.println("New Negocio object created: " + neg);
-        hibernateTemplate.save(neg);
+        neg.setImage(Base64.decode(neg.getLogotipo()));
+        hibernateTemplate.saveOrUpdate(neg);
         // return HTTP response 200 in case of success
         return resArray();
    }
@@ -198,5 +202,119 @@ public class NegociosWebServicesLogic {
         String json = gson.toJson(products );
         System.out.println("Json products: " + json);
         return json;
+   }
+    /*
+     /rest/v1/status/post
+     */
+   @POST
+    @Path("/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String updateNegocio(InputStream incomingData)  {
+        String crunchifyBuilder = receiveNegocioObject(incomingData);
+        Gson gson = new Gson();
+        Negocios neg = gson.fromJson(crunchifyBuilder, Negocios.class);
+        System.out.println("New Negocio object created: " + neg);
+        neg.setImage(Base64.decode(neg.getLogotipo()));
+        hibernateTemplate.update(neg);
+        // return HTTP response 200 in case of success
+        return resArray();
+   }
+   /*
+     /rest/v1/status/post
+     */
+   @POST
+    @Path("/delete")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String deleteNegocio(InputStream incomingData)  {
+        String crunchifyBuilder = receiveNegocioObject(incomingData);
+        Gson gson = new Gson();
+        Negocios neg = gson.fromJson(crunchifyBuilder, Negocios.class);
+        System.out.println("Negocio object deleted: " + neg);
+        neg.setImage(Base64.decode(neg.getLogotipo()));
+        hibernateTemplate.delete(neg);
+        // return HTTP response 200 in case of success
+        return resArray();
+   }
+    @POST
+    @Path("/saveItem")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String guardarArticulo(InputStream incomingData)  {
+        String crunchifyBuilder = receiveNegocioObject(incomingData);
+        Gson gson = new Gson();
+        Articulo item = gson.fromJson(crunchifyBuilder, Articulo.class);
+        System.out.println("New Negocio object created: " + item);
+        item.setImagen(Base64.decode(item.getImagenString()));
+        hibernateTemplate.saveOrUpdate(item);
+        // return HTTP response 200 in case of success
+        return resArray();
+   }
+    @POST
+    @Path("/saveImages")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String guardarImagen(InputStream incomingData)  {
+        String crunchifyBuilder = receiveNegocioObject(incomingData);
+        Gson gson = new Gson();
+        Images images = gson.fromJson(crunchifyBuilder, Images.class);
+        System.out.println("New Negocio object created: " + images);
+        images.setImagen(Base64.decode(images.getImagenString()));
+        hibernateTemplate.saveOrUpdate(images);
+        // return HTTP response 200 in case of success
+        return resArray();
+   }
+    @POST
+    @Path("/getArticulos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getArticulos()  {
+        Gson gson = new Gson();
+        List<Articulo> articulos  = (List<Articulo>) hibernateTemplate.find("from Articulo");
+        System.out.println("lista de articulos: " + articulos);
+        // return HTTP response 200 in case of success
+        String json = gson.toJson(articulos );
+        System.out.println("Json products: " + json);
+        return json;
+   }
+    @POST
+    @Path("/getImages")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getImagenes()  {
+        Gson gson = new Gson();
+        List<Images> imagenes  = (List<Images>) hibernateTemplate.find("from Images");
+        System.out.println("lista de imagenes: " + imagenes);
+        // return HTTP response 200 in case of success
+        String json = gson.toJson(imagenes );
+        System.out.println("Json imagenes: " + json);
+        return json;
+   }
+    @POST
+    @Path("/updateItem")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String updateArticulo(InputStream incomingData)  {
+        String crunchifyBuilder = receiveNegocioObject(incomingData);
+        Gson gson = new Gson();
+        Articulo item = gson.fromJson(crunchifyBuilder, Articulo.class);
+        System.out.println("New Negocio object created: " + item);
+        item.setImagen(Base64.decode(item.getImagenString()));
+        hibernateTemplate.update(item);
+        // return HTTP response 200 in case of success
+        return resArray();
+   }
+    @POST
+    @Path("/updateImages")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String updateImagen(InputStream incomingData)  {
+        String crunchifyBuilder = receiveNegocioObject(incomingData);
+        Gson gson = new Gson();
+        Images images = gson.fromJson(crunchifyBuilder, Images.class);
+        System.out.println("New Negocio object created: " + images);
+        images.setImagen(Base64.decode(images.getImagenString()));
+        hibernateTemplate.update(images);
+        // return HTTP response 200 in case of success
+        return resArray();
    }
 }
