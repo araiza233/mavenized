@@ -1,6 +1,7 @@
 package com.mx.webservices;
 import com.google.gson.Gson;
 import com.publicidad.entities.Articulo;
+import com.publicidad.entities.ImageTemp;
 import com.publicidad.entities.Images;
 import com.publicidad.entities.Negocios;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
@@ -258,9 +259,11 @@ public class NegociosWebServicesLogic {
     public String guardarImagen(InputStream incomingData)  {
         String crunchifyBuilder = receiveNegocioObject(incomingData);
         Gson gson = new Gson();
-        Images images = gson.fromJson(crunchifyBuilder, Images.class);
-        System.out.println("New Negocio object created: " + images);
-        images.setImagen(Base64.decode(images.getImagenString()));
+        ImageTemp imagesTemp = gson.fromJson(crunchifyBuilder, ImageTemp.class);
+        System.out.println("New Negocio object created: " + imagesTemp);
+         Images images = new Images();
+        images.setImagen(Base64.decode(imagesTemp.getImagenString()));
+        images.setIdArticulo(imagesTemp.getIdArticulo());
         hibernateTemplate.saveOrUpdate(images);
         // return HTTP response 200 in case of success
         return resArray();
@@ -308,11 +311,14 @@ public class NegociosWebServicesLogic {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String updateImagen(InputStream incomingData)  {
-        String crunchifyBuilder = receiveNegocioObject(incomingData);
+       String crunchifyBuilder = receiveNegocioObject(incomingData);
         Gson gson = new Gson();
-        Images images = gson.fromJson(crunchifyBuilder, Images.class);
-        System.out.println("New Negocio object created: " + images);
-        images.setImagen(Base64.decode(images.getImagenString()));
+        ImageTemp imagesTemp = gson.fromJson(crunchifyBuilder, ImageTemp.class);
+        System.out.println("New Negocio object created: " + imagesTemp);
+         Images images = new Images();
+        images.setImagen(Base64.decode(imagesTemp.getImagenString()));
+        images.setIdArticulo(imagesTemp.getIdArticulo());
+        images.setIdImagen(imagesTemp.getIdImagen());
         hibernateTemplate.update(images);
         // return HTTP response 200 in case of success
         return resArray();

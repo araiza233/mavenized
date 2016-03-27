@@ -27,7 +27,6 @@ public class Images {
     private int idImagen;
     @Column(name = "imagen")
     private byte[] imagen;
-    private String imagenString;
 
     public int getIdArticulo() {
         return idArticulo;
@@ -53,13 +52,6 @@ public class Images {
         this.imagen = imagen;
     }
 
-    public String getImagenString() {
-        return imagenString;
-    }
-
-    public void setImagenString(String imagenString) {
-        this.imagenString = imagenString;
-    }
     @Override
     public String toString(){
         StringBuilder str = new StringBuilder("idArticulo: ");
